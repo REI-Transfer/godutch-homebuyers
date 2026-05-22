@@ -16,6 +16,7 @@ interface AdvertorialPageProps {
   phoneHref: string
   marketName: string
   accentColor: string
+  serviceBounds?: { south: number; north: number; west: number; east: number } | null
   writerName?: string
   writerRole?: string
   writerHeadshot?: string
@@ -31,6 +32,7 @@ export function AdvertorialPage({
   phoneHref,
   marketName,
   accentColor,
+  serviceBounds = null,
   writerName = "Margaret Ellison",
   writerRole = "Senior Housing Correspondent",
   writerHeadshot = "/images/adv-local-team.jpg",
@@ -266,7 +268,7 @@ export function AdvertorialPage({
         <div className="max-w-[760px] mx-auto flex gap-2.5 items-center">
           <label className="hidden sm:block text-[13px] font-bold whitespace-nowrap">Type your address to begin:</label>
           <div className="flex-1 min-w-0">
-            <AddressAutocomplete value={stickyAddr} onChange={setStickyAddr} onSelect={handleStickySelect} placeholder="Your property address" />
+            <AddressAutocomplete value={stickyAddr} onChange={setStickyAddr} onSelect={handleStickySelect} placeholder="Your property address" bounds={serviceBounds || undefined} />
           </div>
           <button onClick={openModalFromButton} style={{ background: C.cta }} className="px-4 sm:px-[18px] py-3 text-white rounded-[9px] text-[14px] sm:text-[15px] font-extrabold whitespace-nowrap hover:opacity-95 transition-opacity">See My Cash Offer →</button>
         </div>

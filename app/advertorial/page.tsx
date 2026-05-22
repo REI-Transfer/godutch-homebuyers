@@ -22,6 +22,7 @@ export default function AdvertorialRoute() {
         phoneHref={cfg.phoneHref}
         marketName={m}
         accentColor={cfg.accentColor}
+        serviceBounds={cfg.serviceBounds || undefined}
       />
     </main>
   )

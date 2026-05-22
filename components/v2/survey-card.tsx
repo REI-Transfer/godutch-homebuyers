@@ -500,6 +500,7 @@ export function SurveyCard({ initialAddress }: SurveyCardProps = {}) {
               onChange={(address) => { setSurveyData({ ...surveyData, address }); setAddressVerified(false) }}
               onSelect={handleAddressSelect}
               placeholder="Start typing your address..."
+              bounds={config.serviceBounds || undefined}
             />
             <Button
               onClick={handleNext}

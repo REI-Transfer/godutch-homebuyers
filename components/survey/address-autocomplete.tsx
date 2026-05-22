@@ -119,7 +119,9 @@ export function AddressAutocomplete({
         { lat: bounds.south, lng: bounds.west },
         { lat: bounds.north, lng: bounds.east }
       )
-      autocompleteOptions.strictBounds = false
+      // strictBounds: only surface addresses inside the service-area box (Houston + nearby
+      // counties for GoDutch). County-level qualification still runs after selection.
+      autocompleteOptions.strictBounds = true
     }
     autocompleteRef.current = new google.maps.places.Autocomplete(inputRef.current, autocompleteOptions)
 
