@@ -1,11 +1,17 @@
 "use client"
 
 import { useEffect } from "react"
+import Image from "next/image"
+import Link from "next/link"
 import { CheckCircle2, Phone, Clock, Shield } from "lucide-react"
 import { FooterLinks } from "@/components/polar/footer-links"
 import { getConfig } from "@/lib/config"
+import { ContactCTA } from "@/components/article/contact-cta"
+import { ARTICLES } from "@/lib/articles"
 
 const config = getConfig()
+const SMS_KEYWORD = process.env.NEXT_PUBLIC_SMS_KEYWORD || "OFFER"
+const RECOMMENDED_READS = ARTICLES.slice(0, 4)
 const thankYouVideoUrl = process.env.NEXT_PUBLIC_THANK_YOU_VIDEO_URL || process.env.NEXT_PUBLIC_HERO_VIDEO_URL || ""
 
 const faqVideos = [
@@ -96,6 +102,40 @@ export default function ThankYouPage() {
                 <p className="text-sm text-gray-600">{desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Text / call CTA */}
+      <div className="px-4">
+        <ContactCTA
+          phoneDisplay={config.phoneDisplay}
+          phoneHref={config.phoneHref}
+          smsKeyword={SMS_KEYWORD}
+          heading="Want your offer faster? Reach us now."
+          subheading={`Tap to text us the word ${SMS_KEYWORD}, or call and a local team member will pick up.`}
+        />
+      </div>
+
+      {/* While you wait: advertorial reads */}
+      <div className="px-4 pb-4">
+        <div className="mx-auto max-w-2xl rounded-2xl bg-white border border-gray-100 shadow-sm p-6 md:p-8">
+          <h3 className="text-lg font-bold text-gray-900 mb-1">While You Wait, a Few Honest Reads</h3>
+          <p className="text-sm text-gray-500 mb-5">Straight talk on the questions almost every homeowner asks before they sell.</p>
+          <div className="grid grid-cols-1 gap-3">
+            {RECOMMENDED_READS.map((a) => (
+              <Link key={a.slug} href={a.slug} className="group flex gap-4 rounded-xl border border-gray-200 p-3 transition-colors hover:bg-gray-50 no-underline">
+                <Image src={a.image} alt={a.title} width={120} height={90} className="h-[72px] w-[96px] sm:h-[84px] sm:w-[112px] shrink-0 rounded-lg object-cover bg-gray-100" />
+                <div className="min-w-0">
+                  <div className="font-bold text-gray-900 leading-snug">{a.title}</div>
+                  <p className="mt-1 text-sm text-gray-500 line-clamp-2">{a.teaser}</p>
+                  <span className="mt-1 inline-block text-sm font-semibold" style={{ color: "var(--accent-brand)" }}>Read the article &rarr;</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+          <div className="mt-4 text-center">
+            <Link href="/articles" className="text-sm font-semibold underline" style={{ color: "var(--accent-brand)" }}>See all articles</Link>
           </div>
         </div>
       </div>

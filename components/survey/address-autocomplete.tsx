@@ -45,6 +45,35 @@ function isBlockedAddress(formattedAddress: string): boolean {
   return BLOCKED_ADDRESSES.some(blocked => lower.includes(blocked))
 }
 
+// Singleton loader: load the Google Maps script EXACTLY ONCE per page. The advertorial
+// renders multiple AddressAutocomplete instances; each injecting its own <script> makes
+// Google load multiple times and the Places API throws "included multiple times" and breaks
+// autocomplete page-wide. This shared promise loads it once; all instances bind when ready.
+let googleMapsPromise: Promise<void> | null = null
+function loadGoogleMaps(): Promise<void> {
+  if (typeof window === "undefined") return Promise.resolve()
+  if (window.google?.maps?.places) return Promise.resolve()
+  if (googleMapsPromise) return googleMapsPromise
+  googleMapsPromise = new Promise<void>((resolve, reject) => {
+    const existing = document.querySelector<HTMLScriptElement>("script[data-google-maps]")
+    if (existing) {
+      existing.addEventListener("load", () => resolve())
+      existing.addEventListener("error", () => reject(new Error("Google Maps failed to load")))
+      if (window.google?.maps?.places) resolve()
+      return
+    }
+    const script = document.createElement("script")
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY}&libraries=places`
+    script.async = true
+    script.defer = true
+    script.setAttribute("data-google-maps", "true")
+    script.onload = () => resolve()
+    script.onerror = () => reject(new Error("Google Maps failed to load"))
+    document.head.appendChild(script)
+  })
+  return googleMapsPromise
+}
+
 export function AddressAutocomplete({
   value,
   onChange,
@@ -58,26 +87,19 @@ export function AddressAutocomplete({
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
-    // Check if script already loaded
-    if (window.google?.maps?.places) {
-      setIsLoaded(true)
-      initAutocomplete()
-      return
-    }
-
-    // Load Google Places script
-    const script = document.createElement("script")
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY}&libraries=places`
-    script.async = true
-    script.defer = true
-    script.onload = () => {
-      setIsLoaded(true)
-      initAutocomplete()
-    }
-    document.head.appendChild(script)
+    let cancelled = false
+    loadGoogleMaps()
+      .then(() => {
+        if (cancelled) return
+        setIsLoaded(true)
+        initAutocomplete()
+      })
+      .catch(() => {
+        /* key/network failure — input still works as a plain text field */
+      })
 
     return () => {
-      // Cleanup
+      cancelled = true
       if (autocompleteRef.current) {
         google.maps.event.clearInstanceListeners(autocompleteRef.current)
       }
