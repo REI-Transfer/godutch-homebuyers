@@ -202,7 +202,9 @@ export function AdvertorialPage({
             <h3 className="text-[23px] md:text-[26px] font-extrabold">Find Out What Your Home Qualifies For</h3>
             <p style={{ color: C.muted }} className="mt-1 text-[15px]">A handful of quick questions. No cost, nothing owed, no arm-twisting.</p>
           </div>
-          <SurveyCard />
+          <div className="flex justify-center">
+            <SurveyCard />
+          </div>
         </div>
 
         <H2>What Other Homeowners Are Saying</H2>
