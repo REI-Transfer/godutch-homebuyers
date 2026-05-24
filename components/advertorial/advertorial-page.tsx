@@ -12,11 +12,6 @@ import { AddressAutocomplete, type AddressDetails } from "@/components/survey/ad
 // Tuned for a 45+ Houston seller audience: calm empathy-first voice, large readable type,
 // trust signals above the fold, mechanism preview, repeated full-width CTAs, FAQ, compare table.
 
-interface Stat {
-  value: string
-  label: string
-}
-
 interface AdvertorialPageProps {
   companyName: string
   phoneDisplay: string
@@ -25,7 +20,6 @@ interface AdvertorialPageProps {
   accentColor: string
   serviceBounds?: { south: number; north: number; west: number; east: number } | null
   ownerName?: string
-  stats?: Stat[]
   writerName?: string
   writerRole?: string
   writerHeadshot?: string
@@ -43,7 +37,6 @@ export function AdvertorialPage({
   accentColor,
   serviceBounds = null,
   ownerName,
-  stats = [],
   writerName = "Margaret Ellison",
   writerRole = "Senior Housing Correspondent",
   writerHeadshot = "/images/adv-local-team.jpg",
@@ -120,18 +113,7 @@ export function AdvertorialPage({
             Many older {where} homes are sitting on far more equity than their owners realize. Here is how to find your number in 24 hours, then turn it into cash in your hand. Sold as it stands, with no repairs, no showings, and no agent commission taken off the top.
           </p>
 
-          {stats.length > 0 && (
-            <div style={{ borderTop: `1px solid ${C.rule}`, borderBottom: `1px solid ${C.rule}` }} className="grid grid-cols-2 sm:grid-cols-4 gap-x-3 gap-y-4 py-4 mb-[22px] text-center">
-              {stats.map((s) => (
-                <div key={s.label}>
-                  <div style={{ color: C.accent }} className="text-[22px] md:text-[24px] font-extrabold leading-none">{s.value}</div>
-                  <div style={{ color: C.muted }} className="text-[12px] md:text-[13px] mt-1">{s.label}</div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          <div style={{ borderBottom: `1px solid ${C.rule}` }} className="flex items-center gap-3 pb-4 mb-[30px]">
+          <div style={{ borderTop: `1px solid ${C.rule}`, borderBottom: `1px solid ${C.rule}` }} className="flex items-center gap-3 py-4 mb-[30px]">
             <Image src={writerHeadshot} alt={writerName} width={46} height={46} className="h-[46px] w-[46px] rounded-full object-cover bg-gray-200" />
             <div>
               <div className="text-[15px] font-semibold">By {writerName}</div>
