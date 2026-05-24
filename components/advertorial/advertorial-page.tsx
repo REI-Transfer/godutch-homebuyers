@@ -106,11 +106,11 @@ export function AdvertorialPage({
         <p style={{ color: C.muted }} className="text-xs tracking-[0.14em] uppercase text-center mb-[18px]">Advertorial</p>
 
         <header>
-          <h1 className="text-[29px] md:text-[39px] leading-[1.16] font-extrabold text-center mb-[18px] tracking-[-0.01em]">
-            See Your Cash Number In 24 Hours. No Listing, No Repairs, No Showings. Then Decide If It Beats The Agent Route.
+          <h1 className="text-[29px] md:text-[39px] leading-[1.16] font-extrabold text-center mb-[16px] tracking-[-0.01em]">
+            {market === "your area" ? "" : `${market} `}Homeowners 45+: One Little-Known Buyer Rule Is Putting Clean Cash Offers On Older Homes In Your Zip Code.
           </h1>
-          <p className="text-center text-[18px] md:text-[20px] mb-[24px] leading-[1.55]">
-            For {where} homeowners 45+. Many older homes around here are sitting on far more equity than their owners realize. Get your number in 24 hours, sold exactly as it stands, then weigh it honestly against listing with an agent.
+          <p className="text-center text-[20px] md:text-[23px] font-semibold mb-[26px] leading-[1.4]">
+            See Your Cash Number In 24 Hours. No Listing, No Repairs, No Showings. Then Decide If It Beats The Agent Route.
           </p>
 
           <div style={{ borderTop: `1px solid ${C.rule}`, borderBottom: `1px solid ${C.rule}` }} className="flex items-center gap-3 py-4 mb-[30px]">
