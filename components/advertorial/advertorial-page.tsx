@@ -96,13 +96,12 @@ export function AdvertorialPage({
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
-  const scrollToForm = () => formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
   const handleStickySelect = (address: string, _details: AddressDetails) => { setSeeded(address); setModalOpen(true) }
   const openModalFromButton = () => { if (!seeded && stickyAddr.trim()) setSeeded(stickyAddr.trim()); setModalOpen(true) }
 
   const Cta = ({ label }: { label: string }) => (
     <div className="my-[36px] flex justify-center">
-      <button onClick={scrollToForm} style={{ background: C.cta }} className="w-full max-w-[540px] text-white font-extrabold text-[18px] md:text-[20px] text-center px-6 py-[19px] rounded-[40px] hover:opacity-95 transition-opacity shadow-sm">
+      <button onClick={() => setModalOpen(true)} style={{ background: C.cta }} className="w-full max-w-[540px] text-white font-extrabold text-[18px] md:text-[20px] text-center px-6 py-[19px] rounded-[40px] hover:opacity-95 transition-opacity shadow-sm">
         {label}
       </button>
     </div>
@@ -360,7 +359,7 @@ export function AdvertorialPage({
             </div>
           </div>
           <p style={{ color: C.warn }} className="text-[14px] font-bold mb-[18px]">Just {slots} offer reviews remaining for homeowners in our area this week</p>
-          <button onClick={scrollToForm} style={{ background: C.cta }} className="block w-full text-white font-extrabold text-[17px] text-center px-5 py-[17px] rounded-[40px] hover:opacity-95 transition-opacity">
+          <button onClick={() => setModalOpen(true)} style={{ background: C.cta }} className="block w-full text-white font-extrabold text-[17px] text-center px-5 py-[17px] rounded-[40px] hover:opacity-95 transition-opacity">
             See What My Home Qualifies For →
           </button>
           <p className="mt-4 text-[14px]">Prefer to talk it through? Call us at{" "}
