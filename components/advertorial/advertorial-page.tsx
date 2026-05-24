@@ -107,10 +107,10 @@ export function AdvertorialPage({
 
         <header>
           <h1 className="text-[29px] md:text-[39px] leading-[1.16] font-extrabold text-center mb-[18px] tracking-[-0.01em]">
-            {market === "your area" ? "" : `${market} `}Homeowners Past 45: Your Home Is Probably Worth More Than You Think
+            See Your Cash Number In 24 Hours. No Listing, No Repairs, No Showings. Then Decide If It Beats The Agent Route.
           </h1>
           <p className="text-center text-[18px] md:text-[20px] mb-[24px] leading-[1.55]">
-            Many older {where} homes are sitting on far more equity than their owners realize. Here is how to find your number in 24 hours, then turn it into cash in your hand. Sold as it stands, with no repairs, no showings, and no agent commission taken off the top.
+            For {where} homeowners 45+. Many older homes around here are sitting on far more equity than their owners realize. Get your number in 24 hours, sold exactly as it stands, then weigh it honestly against listing with an agent.
           </p>
 
           <div style={{ borderTop: `1px solid ${C.rule}`, borderBottom: `1px solid ${C.rule}` }} className="flex items-center gap-3 py-4 mb-[30px]">
