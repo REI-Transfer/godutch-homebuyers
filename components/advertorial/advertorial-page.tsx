@@ -102,18 +102,18 @@ export function AdvertorialPage({
 
   return (
     <div style={{ color: C.text, background: "#fff" }}>
-      <article className="mx-auto max-w-[760px] px-6 pt-10 pb-36 text-[18px] md:text-[19px] leading-[1.7]">
-        <p style={{ color: C.muted }} className="text-xs tracking-[0.14em] uppercase text-center mb-[18px]">Advertorial</p>
+      <article className="mx-auto max-w-[760px] px-6 pt-6 md:pt-10 pb-36 text-[18px] md:text-[19px] leading-[1.7]">
+        <p style={{ color: C.muted }} className="text-xs tracking-[0.14em] uppercase text-center mb-[12px]">Advertorial</p>
 
         <header>
-          <h1 className="text-[29px] md:text-[39px] leading-[1.16] font-extrabold text-center mb-[16px] tracking-[-0.01em]">
+          <h1 className="text-[24px] md:text-[34px] leading-[1.18] font-extrabold text-center mb-[12px] tracking-[-0.01em]">
             {market === "your area" ? "" : `${market} `}Homeowners 45+: One Little-Known Buyer Rule Is Putting Clean Cash Offers On Older Homes In Your Zip Code.
           </h1>
-          <p className="text-center text-[20px] md:text-[23px] font-semibold mb-[26px] leading-[1.4]">
+          <p className="text-center text-[17px] md:text-[20px] font-semibold mb-[18px] leading-[1.4]">
             See Your Cash Number In 24 Hours. No Listing, No Repairs, No Showings. Then Decide If It Beats The Agent Route.
           </p>
 
-          <div style={{ borderTop: `1px solid ${C.rule}`, borderBottom: `1px solid ${C.rule}` }} className="flex items-center gap-3 py-4 mb-[30px]">
+          <div style={{ borderTop: `1px solid ${C.rule}`, borderBottom: `1px solid ${C.rule}` }} className="flex items-center gap-3 py-3 mb-[22px]">
             <Image src={writerHeadshot} alt={writerName} width={46} height={46} className="h-[46px] w-[46px] rounded-full object-cover bg-gray-200" />
             <div>
               <div className="text-[15px] font-semibold">By {writerName}</div>
