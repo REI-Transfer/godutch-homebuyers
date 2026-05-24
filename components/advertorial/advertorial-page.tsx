@@ -274,12 +274,11 @@ export function AdvertorialPage({
               </ul>
             </div>
             <div>
-              <p className="font-bold mb-2" style={{ color: C.muted }}>Not the right fit for:</p>
+              <p className="font-bold mb-2" style={{ color: C.muted }}>Not the right fit if you:</p>
               <ul className="space-y-1.5 text-[15px] list-disc pl-[20px]">
-                <li>Mobile or manufactured homes</li>
-                <li>Vacant land or empty lots</li>
-                <li>A home already listed with an agent</li>
-                <li>Anyone who is not the owner on title</li>
+                <li>Have a home in great shape, with the time and money to list it the traditional way</li>
+                <li>Already have the home listed with an agent</li>
+                <li>Are not the owner on title</li>
               </ul>
             </div>
           </div>
