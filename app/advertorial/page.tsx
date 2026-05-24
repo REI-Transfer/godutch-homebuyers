@@ -14,6 +14,12 @@ export const metadata: Metadata = {
 export default function AdvertorialRoute() {
   const cfg = getConfig()
   const m = cfg.serviceArea && cfg.serviceArea !== "Your Area" ? cfg.serviceArea.split(",")[0].trim() : ""
+  const stats = [
+    { value: cfg.stat1Value, label: cfg.stat1Label },
+    { value: cfg.stat2Value, label: cfg.stat2Label },
+    { value: cfg.stat3Value, label: cfg.stat3Label },
+    { value: cfg.stat4Value, label: cfg.stat4Label },
+  ]
   return (
     <main className="relative min-h-screen bg-white">
       <AdvertorialPage
@@ -23,6 +29,8 @@ export default function AdvertorialRoute() {
         marketName={m}
         accentColor={cfg.accentColor}
         serviceBounds={cfg.serviceBounds || undefined}
+        ownerName={cfg.ownerName}
+        stats={stats}
       />
     </main>
   )
