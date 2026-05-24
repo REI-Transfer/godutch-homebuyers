@@ -78,10 +78,10 @@ export function AdvertorialPage({
 
         <header>
           <h1 className="text-[24px] md:text-[34px] leading-[1.18] font-extrabold text-center mb-[12px] tracking-[-0.01em]">
-            {market === "your area" ? "" : `${market} `}Homeowners 45+: A Buyer Criteria Most Sellers Overlook Is Lifting Cash Offers In Your Neighborhood.
+            {market === "your area" ? "" : `${market} `}Homeowners 45+: A Buyer Criteria Most Sellers Overlook Is Pushing Higher Cash Offers On Older Homes.
           </h1>
           <p className="text-center text-[17px] md:text-[20px] font-semibold mb-[10px] leading-[1.4]">
-            See Your 24-Hour Number Without Listing, Repairs, Or Showings.
+            See Your 24-Hour Cash Offer Estimate Without Listing, Repairs, Or Showings.
           </p>
           <p style={{ color: C.muted }} className="text-center text-[15px] mb-[18px] leading-[1.45]">
             Best for dated or inherited homes that need work, and owners who want speed and certainty.
@@ -334,8 +334,8 @@ export function AdvertorialPage({
           <button onClick={() => setModalOpen(true)} style={{ background: C.cta }} className="block w-full text-white font-extrabold text-[17px] text-center px-5 py-[17px] rounded-[40px] hover:opacity-95 transition-opacity">
             See What My Home Qualifies For →
           </button>
-          <p className="mt-4 text-[14px]">Prefer to talk it through? Call us at{" "}
-            <a href={`tel:${phoneHref}`} style={{ color: C.accent }} className="font-bold underline underline-offset-2">{phoneDisplay}</a>
+          <p className="mt-4 text-[14px]">Prefer to talk it through?<br className="sm:hidden" /> Call us at{" "}
+            <a href={`tel:${phoneHref}`} style={{ color: C.accent }} className="font-bold underline underline-offset-2 whitespace-nowrap">{phoneDisplay}</a>
           </p>
         </aside>
 
