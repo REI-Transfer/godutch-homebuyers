@@ -1,27 +1,32 @@
 "use client"
 
+import Image from "next/image"
 import { Star } from "lucide-react"
 import { openQuiz } from "./openQuiz"
 
-// Placeholder reviews — swap with real Google reviews when available.
+// Placeholder reviews. Swap with real Google reviews when available.
+// Avatars are AI-generated stand-ins (GPT Image 2).
 const REVIEWS = [
   {
     quote:
-      "Tom's team walked me through the math line by line. The number they quoted is what hit my account at closing. Other cash buyers I'd talked to all chipped the price after inspection — GoDutch didn't.",
-    name: "C. Rodriguez",
+      "Tom's team walked me through the math line by line. The number they quoted is what hit my account at closing. Other cash buyers I'd talked to all chipped the price after inspection. GoDutch didn't.",
+    name: "C. Mendez",
     city: "Houston, TX",
+    avatar: "/v2-avatars/gd-1.jpg",
   },
   {
     quote:
       "Inherited my mom's place. Didn't want to deal with showings or repairs. Sent them a few photos, got a real offer in 24 hours, closed in three weeks.",
-    name: "A. Nguyen",
+    name: "A. Bennett",
     city: "Katy, TX",
+    avatar: "/v2-avatars/gd-2.jpg",
   },
   {
     quote:
       "Tired landlord here. Two bad tenants in a row and I was done. They took it as-is, paid what they promised, and I walked away clean.",
     name: "M. Williams",
     city: "Sugar Land, TX",
+    avatar: "/v2-avatars/gd-3.jpg",
   },
 ]
 
@@ -75,16 +80,31 @@ export default function Reviews() {
               >
                 "{r.quote}"
               </p>
-              <div className="mt-1">
-                <p
-                  className="font-display font-black text-[13px] uppercase tracking-wide leading-tight"
-                  style={{ color: "var(--hpg-black)" }}
+              <div className="flex items-center gap-3 mt-1">
+                <div
+                  className="relative h-12 w-12 rounded-full overflow-hidden shrink-0"
+                  style={{ border: "2px solid var(--hpg-gold)" }}
                 >
-                  {r.name}
-                </p>
-                <p className="text-[12px] leading-tight" style={{ color: "var(--hpg-muted)" }}>
-                  {r.city}
-                </p>
+                  <Image
+                    src={r.avatar}
+                    alt={r.name}
+                    fill
+                    sizes="48px"
+                    className="object-cover"
+                    unoptimized
+                  />
+                </div>
+                <div>
+                  <p
+                    className="font-display font-black text-[13px] uppercase tracking-wide leading-tight"
+                    style={{ color: "var(--hpg-black)" }}
+                  >
+                    {r.name}
+                  </p>
+                  <p className="text-[12px] leading-tight" style={{ color: "var(--hpg-muted)" }}>
+                    {r.city}
+                  </p>
+                </div>
               </div>
               <p
                 className="text-[11px] font-bold uppercase tracking-wider mt-3"
