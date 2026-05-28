@@ -1,3 +1,5 @@
+import WhoAreWeForVideo from "@/components/v2/WhoAreWeForVideo"
+
 const BULLETS = [
   "Locally Owned & Operated",
   "Family Operated, Not a Hedge Fund",
@@ -37,6 +39,9 @@ export default function WhyUs({ companyName }: WhyUsProps) {
         >
           We are a locally-owned cash home buyer trusted by Houston area homeowners. Every offer is underwritten personally. The number we quote you is the number that hits your account at closing. No re-trades, no chip jobs, no surprises.
         </p>
+        <div className="mb-7">
+          <WhoAreWeForVideo />
+        </div>
         <ul className="grid grid-cols-2 gap-3 sm:gap-4 max-w-xl mx-auto">
           {BULLETS.map((b) => (
             <li

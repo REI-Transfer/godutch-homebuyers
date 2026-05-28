@@ -1,7 +1,6 @@
 import { Figtree, Inter } from "next/font/google"
 import SiteHeader from "@/components/v2/SiteHeader"
 import Hero from "@/components/v2/Hero"
-import WhoAreWeForVideo from "@/components/v2/WhoAreWeForVideo"
 import ServiceOptions from "@/components/v2/ServiceOptions"
 import WhyUs from "@/components/v2/WhyUs"
 import Reviews from "@/components/v2/Reviews"
@@ -44,7 +43,6 @@ export default function CountdownPage() {
           logoUrl={config.logoUrl}
         />
         <Hero marketName={marketName} />
-        <WhoAreWeForVideo />
         <ServiceOptions />
         <WhyUs companyName={config.companyName} />
         <Reviews />
