@@ -11,14 +11,14 @@ export default function SiteHeader({ companyName, phoneDisplay, phoneHref, logoU
   const tel = `tel:${phoneHref}`
   return (
     <header className="absolute top-0 left-0 right-0 z-30 bg-black/35 backdrop-blur-sm border-b border-white/10">
-      <div className="hpg-container px-3 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-3">
+      <div className="hpg-container px-3 sm:px-6 h-20 sm:h-24 flex items-center justify-between gap-3">
         <a
           href="/"
           className="flex items-center shrink-0 bg-[#FAF8F2] rounded-xl px-3 py-1.5 sm:px-4 sm:py-2 shadow-md ring-1 ring-black/10"
           aria-label={companyName}
         >
           {logoUrl ? (
-            <img src={logoUrl} alt={companyName} className="h-9 sm:h-11 w-auto" />
+            <img src={logoUrl} alt={companyName} className="h-14 sm:h-16 w-auto" />
           ) : (
             <span
               className="font-display font-black uppercase tracking-tight text-[15px] sm:text-[17px]"
