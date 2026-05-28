@@ -45,6 +45,20 @@ function isBlockedAddress(formattedAddress: string): boolean {
   return BLOCKED_ADDRESSES.some(blocked => lower.includes(blocked))
 }
 
+// Service area: 100-mile radius centered on Houston, TX. Used both as a
+// locationBias hint for Google Places (suggestions weighted local) and as a
+// hard post-selection DQ via haversine. Replaces the prior strictBounds box,
+// which was rejecting valid Houston-metro addresses just outside the rectangle.
+const SERVICE_AREA = { centerLat: 29.7604, centerLng: -95.3698, radiusMiles: 100 }
+
+function haversineDistanceMiles(lat1: number, lon1: number, lat2: number, lon2: number): number {
+  const R = 3958.8
+  const dLat = ((lat2 - lat1) * Math.PI) / 180
+  const dLon = ((lon2 - lon1) * Math.PI) / 180
+  const a = Math.sin(dLat / 2) ** 2 + Math.cos((lat1 * Math.PI) / 180) * Math.cos((lat2 * Math.PI) / 180) * Math.sin(dLon / 2) ** 2
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+}
+
 // Singleton loader: load the Google Maps script EXACTLY ONCE per page. The advertorial
 // renders multiple AddressAutocomplete instances; each injecting its own <script> makes
 // Google load multiple times and the Places API throws "included multiple times" and breaks
@@ -109,19 +123,29 @@ export function AddressAutocomplete({
   const initAutocomplete = () => {
     if (!inputRef.current || !window.google?.maps?.places) return
 
+    // Compute bias bounds from the SERVICE_AREA circle. NOT strictBounds —
+    // strictBounds was previously locking valid Houston-metro users out when
+    // their address fell just outside the rectangle, and the post-selection
+    // haversine DQ below now catches anyone truly out of area.
+    const latOffset = SERVICE_AREA.radiusMiles / 69
+    const lngOffset = SERVICE_AREA.radiusMiles / (69 * Math.cos((SERVICE_AREA.centerLat * Math.PI) / 180))
+    const biasBounds = new google.maps.LatLngBounds(
+      { lat: SERVICE_AREA.centerLat - latOffset, lng: SERVICE_AREA.centerLng - lngOffset },
+      { lat: SERVICE_AREA.centerLat + latOffset, lng: SERVICE_AREA.centerLng + lngOffset }
+    )
+
     const autocompleteOptions: google.maps.places.AutocompleteOptions = {
       componentRestrictions: { country: "us" },
       types: ["address"],
       fields: ["formatted_address", "address_components", "geometry"],
+      bounds: biasBounds,
     }
+    // Allow an external bounds prop to override the default bias (rare).
     if (bounds) {
       autocompleteOptions.bounds = new google.maps.LatLngBounds(
         { lat: bounds.south, lng: bounds.west },
         { lat: bounds.north, lng: bounds.east }
       )
-      // strictBounds: only surface addresses inside the service-area box (Houston + nearby
-      // counties for GoDutch). County-level qualification still runs after selection.
-      autocompleteOptions.strictBounds = true
     }
     autocompleteRef.current = new google.maps.places.Autocomplete(inputRef.current, autocompleteOptions)
 
@@ -159,6 +183,17 @@ export function AddressAutocomplete({
           lng = place.geometry.location.lng()
         }
 
+        // Hard DQ: 100-mile radius around Houston. Out-of-area submissions
+        // never reach the webhook; we clear the field and tell the user.
+        if (lat !== undefined && lng !== undefined) {
+          const distance = haversineDistanceMiles(lat, lng, SERVICE_AREA.centerLat, SERVICE_AREA.centerLng)
+          if (distance > SERVICE_AREA.radiusMiles) {
+            alert("Sorry, that address is outside our Houston service area. We currently buy homes within 100 miles of Houston.")
+            onChange("")
+            return
+          }
+        }
+
         const details: AddressDetails = {
           formattedAddress: place.formatted_address,
           state,
@@ -167,7 +202,7 @@ export function AddressAutocomplete({
           lat,
           lng,
         }
-        
+
         onChange(place.formatted_address)
         onSelect(place.formatted_address, details)
       }
