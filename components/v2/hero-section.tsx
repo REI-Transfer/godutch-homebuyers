@@ -8,7 +8,21 @@ import { getConfig } from "@/lib/config";
 
 const config = getConfig();
 
-export function HeroSection() {
+interface HeroSectionProps {
+  /**
+   * H1 string. Comes from the override table (scent-matched) or DEFAULT_HEADLINE
+   * fallback (see app/v2/page.tsx). Always plain text — never raw UTM, never user
+   * input. The override table is the whitelist (XSS guard).
+   *
+   * Optional — if omitted, falls back to config.headline + config.headlineAccent
+   * so this component remains backward-compatible with any other caller.
+   */
+  h1?: string;
+  /** Sub-headline string. Same source as h1. Optional. */
+  sub?: string;
+}
+
+export function HeroSection({ h1, sub }: HeroSectionProps = {}) {
   const [showSurvey, setShowSurvey] = useState(false);
   const [initialAddress, setInitialAddress] = useState("");
   const [outsideAreaError, setOutsideAreaError] = useState(false);
@@ -51,15 +65,29 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* Main headline */}
-        <h1 className="text-center text-2xl font-bold leading-tight tracking-tight text-[#0F1D2F] md:text-5xl lg:text-6xl max-w-4xl animate-reveal-up animation-delay-100">
-          {config.headline}{" "}
-          <span style={{ color: "var(--accent-brand)" }}>{config.headlineAccent}</span>
+        {/*
+          H1 + sub come from app/v2/page.tsx (server-rendered).
+          Dynamic-headline scent: lib/headline-router.ts matches utm_content
+          to lib/headline-overrides.ts; falls back to DEFAULT_HEADLINE.
+          Plain text only — never raw UTM. See feedback_ad-name-scent-contract.md
+        */}
+        <h1
+          data-headline="dynamic"
+          className="text-center text-2xl font-bold leading-tight tracking-tight text-[#0F1D2F] md:text-5xl lg:text-6xl max-w-4xl animate-reveal-up animation-delay-100"
+        >
+          {h1 ? (
+            h1
+          ) : (
+            <>
+              {config.headline}{" "}
+              <span style={{ color: "var(--accent-brand)" }}>{config.headlineAccent}</span>
+            </>
+          )}
         </h1>
 
         {/* Subheadline */}
         <p className="mt-2 md:mt-4 text-center text-base md:text-xl text-[#5A6B7D] max-w-2xl leading-relaxed animate-reveal-up animation-delay-200">
-          {config.subheadline}
+          {sub ?? config.subheadline}
         </p>
 
         {/* Address Input or Survey */}
