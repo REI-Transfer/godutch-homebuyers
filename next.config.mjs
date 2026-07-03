@@ -1,4 +1,5 @@
 /** @type {import("next").NextConfig} */
+// migration wave1: org build + author-gate verification (contact@reitransfer.com)
 const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
