@@ -4,6 +4,7 @@ import { Plus_Jakarta_Sans } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { FacebookPixel } from "@/components/tracking/facebook-pixel"
 import { UtmCapture } from "@/components/tracking/utm-capture"
+import { GoFunnelTracking } from "@/components/tracking/gofunnel-tracking"
 import "./globals.css"
 
 const plusJakartaSans = Plus_Jakarta_Sans({ subsets: ["latin"] })
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" style={{ "--accent-brand": accentColor } as React.CSSProperties}>
       <body className={`font-sans antialiased ${plusJakartaSans.className}`}>
+        <GoFunnelTracking />
         <FacebookPixel />
         <UtmCapture />
         {children}
